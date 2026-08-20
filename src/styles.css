@@ -214,6 +214,33 @@ body {
   height: 100%;
 }
 
+/* Рамка-«портрет» вокруг головы */
+.portrait-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(74%, 460px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid rgba(212, 175, 55, 0.5);
+  box-shadow:
+    0 0 0 14px rgba(212, 175, 55, 0.1),
+    0 0 70px rgba(212, 175, 55, 0.18),
+    inset 0 0 50px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.model-fallback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .status-pill {
   position: absolute;
   bottom: 18px;

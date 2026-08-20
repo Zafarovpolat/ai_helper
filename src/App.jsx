@@ -3,7 +3,7 @@ import Avatar from './components/Avatar.jsx'
 import { POPULAR } from './data/knowledgeBase.js'
 import { answerFor } from './lib/search.js'
 import { speak, stopSpeaking, isTtsSupported } from './lib/tts.js'
-import { createRecognizer, isSttSupported } from './lib/stt.js'
+import { createRecognizer, isSttSupported, requestMic } from './lib/stt.js'
 import { cacheAnswer, getCachedAnswer, logUnanswered } from './lib/cache.js'
 import { CONFIG } from './lib/config.js'
 
@@ -24,8 +24,9 @@ const UI = {
     micHint: 'Нажмите на микрофон и задайте вопрос',
     micHold: 'Удерживайте микрофон, пока говорите',
     textHint: 'или введите текст вручную',
-    noStt: 'Голосовой ввод недоступен в этом браузере — используйте текстовое поле.',
-    micDenied: 'Доступ к микрофону запрещён — используйте текстовое поле.',
+    noStt: 'Голосовой ввод недоступен в этом браузере (например, Firefox) — используйте текстовое поле.',
+    micDenied: 'Доступ к микрофону запрещён — разрешите его в браузере или используйте текстовое поле.',
+    micNoDevice: 'Микрофон не найден — используйте текстовое поле.',
     source: 'Источник',
     offline: 'Офлайн',
     cached: 'из кэша',
@@ -50,8 +51,9 @@ const UI = {
     micHint: 'Mikrofonga bosing va savol bering',
     micHold: "Gapirayotganingizda mikrofonni bosib turing",
     textHint: "yoki matnni qo'lda kiriting",
-    noStt: "Bu brauzerda ovozli kiritish mavjud emas — matn maydonidan foydalaning.",
-    micDenied: "Mikrofonga ruxsat berilmagan — matn maydonidan foydalaning.",
+    noStt: "Bu brauzerda ovozli kiritish mavjud emas (masalan, Firefox) — matn maydonidan foydalaning.",
+    micDenied: "Mikrofonga ruxsat berilmagan — brauzerda ruxsat bering yoki matn maydonidan foydalaning.",
+    micNoDevice: "Mikrofon topilmadi — matn maydonidan foydalaning.",
     source: 'Manba',
     offline: 'Oflayn',
     cached: "keshdan",
@@ -173,9 +175,27 @@ export default function App() {
     respond(clean)
   }
 
-  const startListening = () => {
+  const startListening = async () => {
     if (!sttSupported || listeningRef.current) return
     stopSpeaking()
+
+    // Явный запрос микрофона + понятные ошибки
+    const mic = await requestMic()
+    if (mic === 'denied') {
+      setTranscript(t.micDenied)
+      setStatus('idle')
+      return
+    }
+    if (mic === 'no-device') {
+      setTranscript(t.micNoDevice)
+      setStatus('idle')
+      return
+    }
+    if (mic === 'error' || mic === 'unsupported') {
+      setStatus('idle')
+      return
+    }
+
     setStatus('listening')
     setTranscript('')
     setRepeatPrompt(false)
@@ -272,6 +292,7 @@ export default function App() {
 
       <main className="stage">
         <section className="avatar-pane">
+          <div className="portrait-frame" />
           <Avatar
             talking={status === 'speaking'}
             listening={status === 'listening'}
