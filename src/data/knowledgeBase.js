@@ -226,6 +226,202 @@ export const ENTRIES = [
       answer: 'Temuriylar imperiyasi — XIV asr oxirida Amir Temur asos solgan, poytaxti Samarqand bo\'lgan davlat. Uning gullab-yashnashi fan, san\'at va me\'morchilik yuksalishi — «Temuriylar Renessansi» bilan bog\'liq.',
       source: '«Temuriylar davri» ekspozitsiyasi'
     }
+  },
+  {
+    id: 'shahrisabz',
+    keywords: ['шахрисабз', 'шахрисябз', 'шакрисабз', 'shahrisabz', 'shaxrisabz', 'ак-сарай', 'oq saroy', 'аксарай'],
+    ru: {
+      title: 'Шахрисабз',
+      answer: 'Шахрисабз — родина Амира Темура, один из древнейших городов Узбекистана. Здесь сохранились руины дворца Ак-Сарай и усыпальница Дорус-Саодат. Исторический центр — объект Всемирного наследия ЮНЕСКО.',
+      source: 'Экспозиция «Родина Амира Темура»'
+    },
+    uz: {
+      title: 'Shahrisabz',
+      answer: 'Shahrisabz — Amir Temurning vatani, O\'zbekistonning eng qadimiy shaharlaridan biri. Bu yerda Oq-Saroy saroyi xarobalari va Dorussadat maqbarasi saqlanib qolgan. Tarixiy markazi YuNESKO merosi obyekti.',
+      source: '«Amir Temur vatani» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'babur',
+    keywords: ['бабур', 'бобур', 'бабур-наме', 'бобурнома', 'babur', 'bobur', 'могол', 'mogul'],
+    ru: {
+      title: 'Захириддин Бабур',
+      answer: 'Захириддин Мухаммад Бабур (1483–1530) — потомок Темура, поэт и полководец, основатель империи Великих Моголов в Индии. Автор знаменитых мемуаров «Бабур-наме».',
+      source: 'Экспозиция «Бабур и Великие Моголы»'
+    },
+    uz: {
+      title: 'Zahiriddin Bobur',
+      answer: 'Zahiriddin Muhammad Bobur (1483–1530) — Temur avlodi, shoir va sarkarda, Hindistonda Buyuk Mo\'g\'ullar imperiyasining asoschisi. Mashhur «Boburnoma» xotiralari muallifi.',
+      source: '«Bobur va Buyuk Mo\'g\'ullar» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'ibn-sino',
+    keywords: ['ибн сина', 'ибн сино', 'авиценна', 'авиценн', 'ibn sino', 'ibn sina', 'avitsenna', 'канон', 'tib qonunlari'],
+    ru: {
+      title: 'Абу Али ибн Сина (Авиценна)',
+      answer: 'Абу Али ибн Сина, известный на Западе как Авиценна (980–1037), — великий врач и философ, уроженец Бухарского края. Его «Канон врачебной науки» веками был главным медицинским учебником мира.',
+      source: 'Экспозиция «Наука Средневекового Востока»'
+    },
+    uz: {
+      title: 'Abu Ali ibn Sino (Avitsenna)',
+      answer: 'Abu Ali ibn Sino, G\'arbda Avitsenna nomi bilan mashhur (980–1037), — Buxoro hududidan chiqqan buyuk tabib va faylasuf. Uning «Tib qonunlari» asari asrlar davomida dunyoning asosiy tibbiy darsligi bo\'lgan.',
+      source: '«O\'rta asr Sharqi fani» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'beruni',
+    keywords: ['беруни', 'беруний', 'аль-беруни', 'beruni', 'beruniy', 'хорезми ученый'],
+    ru: {
+      title: 'Абу Райхан Беруни',
+      answer: 'Абу Райхан Беруни (973–1048) — великий учёный-энциклопедист из Хорезма: математик, астроном, географ. Одним из первых в мире достаточно точно вычислил радиус Земли.',
+      source: 'Экспозиция «Наука Средневекового Востока»'
+    },
+    uz: {
+      title: 'Abu Rayhon Beruniy',
+      answer: 'Abu Rayhon Beruniy (973–1048) — Xorazmlik buyuk qomusiy olim: matematik, astronom, geograf. Yerning radiusini dunyoda birinchilardan bo\'lib aniq hisoblagan.',
+      source: '«O\'rta asr Sharqi fani» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'fergana',
+    keywords: ['фергана', 'ферганская долина', 'фаргона', 'fargona', 'farg\'ona', 'долина', 'vodiy'],
+    ru: {
+      title: 'Ферганская долина',
+      answer: 'Ферганская долина — плодородная межгорная котловина, окружённая горами Тянь-Шаня и Алая. Исторический центр земледелия, шёлка и ремёсел, родина Бабура.',
+      source: 'Экспозиция «Ферганская долина»'
+    },
+    uz: {
+      title: 'Farg\'ona vodiysi',
+      answer: 'Farg\'ona vodiysi — Tyan-Shan va Olay tog\'lari bilan o\'ralgan unumdor tog\'lararo botiq. Dehqonchilik, ipak va hunarmandchilikning tarixiy markazi, Boburning vatani.',
+      source: '«Farg\'ona vodiysi» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'rishtan',
+    keywords: ['риштан', 'риштон', 'rishton', 'rishdan', 'керамика', 'kulolchilik', 'гончар'],
+    ru: {
+      title: 'Риштан',
+      answer: 'Риштан — город в Ферганской долине, центр знаменитой сине-бирюзовой керамики. Местные мастера веками передают секреты глазури и росписи из поколения в поколение.',
+      source: 'Экспозиция «Ремёсла Узбекистана»'
+    },
+    uz: {
+      title: 'Rishton',
+      answer: 'Rishton — Farg\'ona vodiysidagi shahar, mashhur ko\'k-feruza kulolchilik markazi. Mahalliy ustalar sir va naqsh sirlarini asrlar davomida avloddan-avlodga o\'tkazib keladi.',
+      source: '«O\'zbekiston hunarmandchiligi» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'suzani',
+    keywords: ['сюзане', 'сузане', 'сюзанэ', 'sozana', 'so\'zana', 'вышивка', 'kashta', 'ткань'],
+    ru: {
+      title: 'Сюзане',
+      answer: 'Сюзане — традиционная вышитая настенная ткань, часть приданого узбекской невесты. Крупные цветочные узоры и солярные символы вышиваются шёлком по шёлку или хлопку.',
+      source: 'Экспозиция «Текстиль и вышивка»'
+    },
+    uz: {
+      title: 'So\'zana',
+      answer: 'So\'zana — an\'anaviy kashtali devor matosi, o\'zbek kelinining sepining bir qismi. Yirik gul naqshlar va quyosh ramzlari shoyi yoki paxta ustiga ipak bilan tikiladi.',
+      source: '«To\'qimachilik va kashtachilik» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'navruz',
+    keywords: ['навруз', 'навроз', 'новруз', 'navruz', 'navro\'z', 'праздник', 'bayram', 'весна'],
+    ru: {
+      title: 'Навруз',
+      answer: 'Навруз — древний праздник весны и нового года, отмечается 21 марта. Символизирует пробуждение природы, сопровождается сумаляком, народными гуляниями и пловом.',
+      source: 'Экспозиция «Традиции и обычаи»'
+    },
+    uz: {
+      title: 'Navro\'z',
+      answer: 'Navro\'z — 21-martda nishonlanadigan qadimiy bahor va yangi yil bayrami. Tabiat uyg\'onishini ifodalaydi, sumalak, xalq sayillari va palov bilan nishonlanadi.',
+      source: '«An\'ana va urf-odatlar» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'plov',
+    keywords: ['плов', 'палов', 'ош', 'plov', 'palov', 'osh', 'кухня', 'oshxona', 'блюдо'],
+    ru: {
+      title: 'Плов',
+      answer: 'Плов (ош) — главное блюдо узбекской кухни из риса, мяса, моркови и специй. Готовится в казане на огне. В 2016 году узбекский плов внесён в список ЮНЕСКО как нематериальное культурное наследие.',
+      source: 'Экспозиция «Кухня Узбекистана»'
+    },
+    uz: {
+      title: 'Palov',
+      answer: 'Palov (osh) — guruch, go\'sht, sabzi va ziravorlardan tayyorlanadigan o\'zbek oshxonasining bosh taomi. Qozonda olovda pishiriladi. 2016-yilda o\'zbek palovi YuNESKO nomoddiy madaniy meros ro\'yxatiga kiritilgan.',
+      source: '«O\'zbekiston oshxonasi» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'kalyan',
+    keywords: ['калян', 'калон', 'kalyan', 'kalon', 'минарет', 'minora', 'башня'],
+    ru: {
+      title: 'Минарет Калян',
+      answer: 'Минарет Калян — символ Бухары, построен в 1127 году. Его высота около 47 метров, а орнаментированная кладка из жжёного кирпича почти тысячу лет сохраняется без реставрации.',
+      source: 'Экспозиция «Монументы Бухары»'
+    },
+    uz: {
+      title: 'Kalyan minorasi',
+      answer: 'Kalyan minorasi — Buxoro ramzi, 1127-yilda qurilgan. Balandligi qariyb 47 metr, pishgan g\'ishtdan ishlangan naqshli terim qariyb ming yildan beri ta\'mirsiz saqlanib kelmoqda.',
+      source: '«Buxoro obidalari» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'ark',
+    keywords: ['арк', 'крепость', 'цитадель', 'ark', 'qal\'a', 'qala', 'бухарская крепость'],
+    ru: {
+      title: 'Крепость Арк',
+      answer: 'Арк — древняя цитадель Бухары, крепость-резиденция правителей. Возраст сооружения более 2000 лет, внутри расположены дворцы, мечеть и музеи.',
+      source: 'Экспозиция «Монументы Бухары»'
+    },
+    uz: {
+      title: 'Ark qal\'asi',
+      answer: 'Ark — Buxoroning qadimiy qal\'asi, hukmdorlar qarorgohi. Inshootning yoshi 2000 yildan ortiq, ichida saroylar, masjid va muzeylar joylashgan.',
+      source: '«Buxoro obidalari» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'samanids',
+    keywords: ['самани', 'саманиды', 'исмаил самани', 'somoniy', 'somoniylar', 'ismail samani', 'династия'],
+    ru: {
+      title: 'Саманиды',
+      answer: 'Исмаил Самани — основатель династии Саманидов, при которой Бухара в IX–X веках стала крупнейшим центром науки и культуры. Его мавзолей — шедевр ранней исламской архитектуры.',
+      source: 'Экспозиция «Государство Саманидов»'
+    },
+    uz: {
+      title: 'Somoniylar',
+      answer: 'Ismoil Somoniy — Somoniylar sulolasi asoschisi, uning davrida Buxoro IX–X asrlarda eng yirik ilm va madaniyat markaziga aylandi. Uning maqbarasi — ilk islom me\'morchiligining durdonasi.',
+      source: '«Somoniylar davlati» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'flag',
+    keywords: ['флаг', 'государственный флаг', 'bayroq', 'davlat bayrog', 'герб', 'gerb', 'символ', 'ramz'],
+    ru: {
+      title: 'Флаг Узбекистана',
+      answer: 'Государственный флаг Узбекистана — три полосы (голубая, белая, зелёная) с полумесяцем и двенадцатью звёздами. Голубой — небо и вода, белый — мир, зелёный — природа, звёзды символизируют месяцы и историю.',
+      source: 'Экспозиция «Государственные символы»'
+    },
+    uz: {
+      title: 'O\'zbekiston bayrog\'i',
+      answer: 'O\'zbekiston davlat bayrog\'i — yarim oy va o\'n ikki yulduzli uch rangli (moviy, oq, yashil) mato. Moviy — osmon va suv, oq — tinchlik, yashil — tabiat, yulduzlar oylar va tarix ramzidir.',
+      source: '«Davlat ramzlari» ekspozitsiyasi'
+    }
+  },
+  {
+    id: 'konstitution',
+    keywords: ['конституция', 'konstitutsiya', 'закон', 'qonun', '8 декабря', '8 dekabr'],
+    ru: {
+      title: 'Конституция Узбекистана',
+      answer: 'Конституция Республики Узбекистан принята 8 декабря 1992 года. Она провозглашает Узбекистан суверенным демократическим государством и закрепляет права и свободы граждан.',
+      source: 'Экспозиция «Новейшая история Узбекистана»'
+    },
+    uz: {
+      title: 'O\'zbekiston Konstitutsiyasi',
+      answer: 'O\'zbekiston Respublikasi Konstitutsiyasi 1992-yil 8-dekabrda qabul qilingan. U O\'zbekistonni suveren demokratik davlat deb e\'lon qiladi va fuqarolarning huquq hamda erkinliklarini mustahkamlaydi.',
+      source: '«O\'zbekistonning yangi tarixi» ekspozitsiyasi'
+    }
   }
 ]
 
