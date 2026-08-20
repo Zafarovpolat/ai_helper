@@ -6,6 +6,7 @@ import { speak, stopSpeaking, isTtsSupported } from './lib/tts.js'
 import { createRecognizer, isSttSupported, requestMic } from './lib/stt.js'
 import { cacheAnswer, getCachedAnswer, logUnanswered } from './lib/cache.js'
 import { CONFIG } from './lib/config.js'
+import { BrandMark, MicIcon, HoldIcon, ExpandIcon, ShrinkIcon, SendIcon, SparkIcon } from './components/Icons.jsx'
 
 const UI = {
   ru: {
@@ -268,23 +269,23 @@ export default function App() {
     <div className="kiosk">
       <header className="topbar">
         <div className="brand">
-          <span className="brand-mark">◈</span>
+          <span className="brand-mark"><BrandMark size={30} /></span>
           <div>
             <div className="brand-title">{t.title}</div>
             <div className="brand-sub">{t.subtitle}</div>
           </div>
         </div>
         <div className="topbar-actions">
-          {!online && <span className="badge badge-offline">◌ {t.offline}</span>}
+          {!online && <span className="badge badge-offline"><span className="badge-dot" />{t.offline}</span>}
           <button
             className={`icon-btn ${pushToTalk ? 'active' : ''}`}
             onClick={() => setPushToTalk((v) => !v)}
             title={t.ptt}
           >
-            {pushToTalk ? '🎙️' : '🔊'} <span className="icon-btn-label">{t.ptt}</span>
+            <HoldIcon size={17} /> <span className="icon-btn-label">{t.ptt}</span>
           </button>
           <button className="icon-btn" onClick={toggleFullscreen} title={t.fullscreen}>
-            {fullscreen ? '⤡' : '⤢'}
+            {fullscreen ? <ShrinkIcon size={17} /> : <ExpandIcon size={17} />}
           </button>
           <div className="lang-toggle">
             <button className={lang === 'ru' ? 'active' : ''} onClick={() => setLang('ru')}>RU</button>
@@ -295,7 +296,6 @@ export default function App() {
 
       <main className="stage">
         <section className="avatar-pane">
-          <div className="portrait-frame" />
           <Avatar
             talking={status === 'speaking'}
             listening={status === 'listening'}
@@ -319,7 +319,7 @@ export default function App() {
                 <div className="msg-role">{m.role === 'user' ? t.you : t.guide}</div>
                 <div className="bubble">
                   {m.text}
-                  {m.cached && <span className="cached-badge">⚡ {t.cached}</span>}
+                  {m.cached && <span className="cached-badge"><SparkIcon size={11} /> {t.cached}</span>}
                 </div>
                 {m.source && (
                   <div className="msg-source">
@@ -343,7 +343,7 @@ export default function App() {
                 title={pushToTalk ? t.micHold : t.micHint}
                 {...micHandlers}
               >
-                {status === 'listening' ? '◉' : '🎤'}
+                <MicIcon size={26} />
               </button>
               <div className="mic-text">
                 <div>{pushToTalk ? t.micHold : t.micHint}</div>
@@ -355,8 +355,8 @@ export default function App() {
               </div>
             </div>
 
-            {repeatPrompt && <div className="repeat-note">⚠ {t.repeat}</div>}
-            {micError && <div className="mic-error">🎙️ {micError}</div>}
+            {repeatPrompt && <div className="repeat-note">{t.repeat}</div>}
+            {micError && <div className="mic-error">{micError}</div>}
 
             <form
               className="input-row"
@@ -373,6 +373,7 @@ export default function App() {
               />
               <button type="submit" disabled={!input.trim()}>
                 {t.ask}
+                <SendIcon size={16} />
               </button>
             </form>
 

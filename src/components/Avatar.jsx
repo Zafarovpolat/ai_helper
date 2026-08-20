@@ -63,15 +63,15 @@ export default function Avatar({ talking = false, listening = false, thinking = 
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 50)
     camera.position.set(0, 0, 3.2)
 
-    // Освещение «портретное»
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5))
-    const key = new THREE.DirectionalLight(0xfff1dd, 1.6)
+    // Нейтральное «студийное» освещение (под ч/б минимализм)
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55))
+    const key = new THREE.DirectionalLight(0xffffff, 1.5)
     key.position.set(1.5, 2.5, 3)
     scene.add(key)
-    const rim = new THREE.DirectionalLight(0x9fc4ff, 1.0)
+    const rim = new THREE.DirectionalLight(0xffffff, 1.1)
     rim.position.set(-2.5, 1.5, -1.5)
     scene.add(rim)
-    const fill = new THREE.DirectionalLight(0xffd9a0, 0.55)
+    const fill = new THREE.DirectionalLight(0xffffff, 0.55)
     fill.position.set(-0.5, -0.5, 3.5)
     scene.add(fill)
 
@@ -120,7 +120,7 @@ export default function Avatar({ talking = false, listening = false, thinking = 
         const size = box.getSize(new THREE.Vector3())
         const center = box.getCenter(new THREE.Vector3())
         const maxDim = Math.max(size.x, size.y, size.z) || 1
-        const scale = 1.7 / maxDim
+        const scale = 1.85 / maxDim
         group.scale.setScalar(scale)
         group.position.sub(center.clone().multiplyScalar(scale))
         group.position.y += 0.02
