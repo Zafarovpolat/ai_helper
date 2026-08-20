@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js'
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js'
 
 // Реальный 3D-персонаж (facecap.glb — голова с полным набором ARKit blendshapes,
 // включая jawOpen / mouthFunnel / mouthPucker / eyeBlink). Липсинк управляется
@@ -91,7 +93,14 @@ export default function Avatar({ talking = false, listening = false, thinking = 
       ;(PAIRS[key] || []).forEach((n) => setMorph(n, v))
     }
 
+    // KTX2-транскодер для декодирования сжатой текстуры модели (Basis Universal)
+    const ktx2Loader = new KTX2Loader()
+      .setTranscoderPath(`${import.meta.env.BASE_URL}three/basis/`)
+      .detectSupport(renderer)
+
     const loader = new GLTFLoader()
+    loader.setKTX2Loader(ktx2Loader)
+    loader.setMeshoptDecoder(MeshoptDecoder)
     loader.load(
       MODEL_URL,
       (gltf) => {
@@ -237,7 +246,7 @@ export default function Avatar({ talking = false, listening = false, thinking = 
   }, [])
 
   return (
-    <div className="avatar-mount">
+    <div ref={mountRef} className="avatar-mount">
       {failed && <div className="model-fallback">3D-модель не загрузилась</div>}
     </div>
   )

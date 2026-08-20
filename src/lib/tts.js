@@ -1,22 +1,18 @@
 // TTS: озвучка.
-// - Русский: Google Translate TTS (MP3) — естественный голос, точные start/end для липсинка.
+// - Русский: Google Translate TTS (MP3) — естественный голос.
 // - Узбекский и fallback: SpeechSynthesis (Web Speech API).
-// События onStart/onEnd управляют анимацией рта аватара.
+// Надёжная отмена через «сессии»: каждый вызов speak() получает номер,
+// устаревшие колбэки игнорируются. События onStart/onEnd управляют липсинком.
 
 const LANG = { ru: 'ru', uz: 'uz' }
 const SYNTH_LANG = { ru: 'ru-RU', uz: 'uz-UZ' }
 
 // ---- SpeechSynthesis ----
 let voices = []
-let voicesReady = false
-
 function loadVoices() {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
   const v = window.speechSynthesis.getVoices()
-  if (v && v.length) {
-    voices = v
-    voicesReady = true
-  }
+  if (v && v.length) voices = v
 }
 if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
   loadVoices()
@@ -29,7 +25,7 @@ function pickVoice(lang) {
   const list = voices.length ? voices : window.speechSynthesis?.getVoices() || []
   if (!list.length) return null
   return (
-    list.find((v) => v.lang.toLowerCase().startsWith(prefix) && /google|natural|neural/i.test(v.name)) ||
+    list.find((v) => v.lang.toLowerCase().startsWith(prefix) && /google|natural|neural|online/i.test(v.name)) ||
     list.find((v) => v.lang.toLowerCase().startsWith(prefix)) ||
     null
   )
@@ -39,16 +35,38 @@ export function isTtsSupported() {
   return typeof window !== 'undefined' && 'speechSynthesis' in window
 }
 
-let synthUtterance = null
-let synthActive = false
+// ---- Сессия / отмена ----
+let session = 0
+let audioEls = []
 
-function synthSpeak(text, lang, { onStart, onEnd }) {
+export function stopSpeaking() {
+  session++ // обесцениваем все текущие колбэки
+  audioEls.forEach((a) => {
+    try {
+      a.pause()
+      a.removeAttribute('src')
+      a.load()
+    } catch {
+      /* ignore */
+    }
+  })
+  audioEls = []
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel()
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
+// ---- SpeechSynthesis ----
+function synthSpeak(text, lang, sess, { onStart, onEnd }) {
   if (!isTtsSupported()) {
     onEnd?.()
     return
   }
   const synth = window.speechSynthesis
-  synth.cancel()
   const u = new SpeechSynthesisUtterance(text)
   u.lang = SYNTH_LANG[lang] || SYNTH_LANG.ru
   const voice = pickVoice(lang)
@@ -56,18 +74,14 @@ function synthSpeak(text, lang, { onStart, onEnd }) {
   u.rate = 1.0
   u.pitch = 1.0
   u.onstart = () => {
-    synthActive = true
-    onStart?.()
+    if (sess === session) onStart?.()
   }
   u.onend = () => {
-    synthActive = false
-    onEnd?.()
+    if (sess === session) onEnd?.()
   }
   u.onerror = () => {
-    synthActive = false
-    onEnd?.()
+    if (sess === session) onEnd?.()
   }
-  synthUtterance = u
   synth.speak(u)
 }
 
@@ -92,22 +106,21 @@ function chunkText(text, max = 180) {
   return chunks.length ? chunks : [text]
 }
 
-let audioEls = []
-let cancelled = false
-
-function googleSpeak(text, lang, { onStart, onEnd }) {
+function googleSpeak(text, lang, sess, { onStart, onEnd }) {
   const chunks = chunkText(text)
   let started = false
   let idx = 0
 
-  const fail = () => {
-    // Не смогли — откат на speechSynthesis
-    synthSpeak(text, lang, { onStart, onEnd })
+  const fallback = () => {
+    if (sess !== session) return
+    // Не смогли через Google — откат на speechSynthesis
+    synthSpeak(text, lang, sess, { onStart, onEnd })
   }
 
   const playNext = () => {
-    if (cancelled || idx >= chunks.length) {
-      if (!cancelled) onEnd?.()
+    if (sess !== session) return
+    if (idx >= chunks.length) {
+      onEnd?.()
       return
     }
     const url = `${GOOGLE_BASE}?ie=UTF-8&client=tw-ob&tl=${LANG[lang] || 'ru'}&q=${encodeURIComponent(chunks[idx])}`
@@ -115,57 +128,50 @@ function googleSpeak(text, lang, { onStart, onEnd }) {
     a.preload = 'auto'
     audioEls.push(a)
     a.src = url
+
+    // Если звук не начал играть за 3 сек — откат на speechSynthesis
+    const startTimeout = setTimeout(() => {
+      if (sess === session && !started) fallback()
+    }, 3000)
     a.onplaying = () => {
+      clearTimeout(startTimeout)
+      if (sess !== session) return
       if (!started) {
         started = true
         onStart?.()
       }
     }
     a.onended = () => {
+      clearTimeout(startTimeout)
+      if (sess !== session) return
       idx++
       playNext()
     }
     a.onerror = () => {
-      cancelled = true
-      fail()
+      clearTimeout(startTimeout)
+      if (sess !== session) return
+      fallback()
     }
     const p = a.play()
-    if (p && p.catch) p.catch(() => fail())
+    if (p && p.catch) p.catch(() => fallback())
   }
 
   playNext()
 }
 
-export function stopSpeaking() {
-  cancelled = true
-  audioEls.forEach((a) => {
-    try {
-      a.pause()
-      a.src = ''
-    } catch {
-      /* ignore */
-    }
-  })
-  audioEls = []
-  if (synthActive && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    window.speechSynthesis.cancel()
-    synthActive = false
-  }
-  // сброс флага для следующего вызова
-  setTimeout(() => {
-    cancelled = false
-  }, 0)
-}
-
 /**
- * Озвучивает текст. Для русского предпочитаем Google TTS, иначе speechSynthesis.
+ * Озвучивает текст. Русский → Google TTS (с откатом на speechSynthesis),
+ * узбекский и офлайн → speechSynthesis.
  */
 export function speak(text, lang, callbacks = {}) {
   const { onStart, onEnd } = callbacks
-  stopSpeaking()
-  if ((LANG[lang] || 'ru') === 'ru' && typeof window !== 'undefined' && navigator.onLine !== false) {
-    googleSpeak(text, lang, { onStart, onEnd })
+  stopSpeaking() // отменяет предыдущую озвучку
+  const sess = ++session // новая сессия
+
+  const useGoogle = (LANG[lang] || 'ru') === 'ru' && navigator.onLine !== false
+  if (useGoogle) {
+    googleSpeak(text, lang, sess, { onStart, onEnd })
   } else {
-    synthSpeak(text, lang, { onStart, onEnd })
+    synthSpeak(text, lang, sess, { onStart, onEnd })
   }
 }

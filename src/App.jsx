@@ -72,6 +72,7 @@ export default function App() {
   const [status, setStatus] = useState('idle') // idle | listening | thinking | speaking
   const [transcript, setTranscript] = useState('')
   const [repeatPrompt, setRepeatPrompt] = useState(false)
+  const [micError, setMicError] = useState(null)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState(() => [{ id: nextId(), role: 'guide', text: UI.ru.greeting }])
   const [pushToTalk, setPushToTalk] = useState(false)
@@ -182,20 +183,22 @@ export default function App() {
     // Явный запрос микрофона + понятные ошибки
     const mic = await requestMic()
     if (mic === 'denied') {
-      setTranscript(t.micDenied)
+      setMicError(t.micDenied)
       setStatus('idle')
       return
     }
     if (mic === 'no-device') {
-      setTranscript(t.micNoDevice)
+      setMicError(t.micNoDevice)
       setStatus('idle')
       return
     }
     if (mic === 'error' || mic === 'unsupported') {
+      setMicError(t.noStt)
       setStatus('idle')
       return
     }
 
+    setMicError(null)
     setStatus('listening')
     setTranscript('')
     setRepeatPrompt(false)
@@ -353,6 +356,7 @@ export default function App() {
             </div>
 
             {repeatPrompt && <div className="repeat-note">⚠ {t.repeat}</div>}
+            {micError && <div className="mic-error">🎙️ {micError}</div>}
 
             <form
               className="input-row"
