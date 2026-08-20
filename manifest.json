@@ -1,0 +1,26 @@
+{
+  "name": "AI Helper — гид по истории Узбекистана",
+  "short_name": "AI Helper",
+  "description": "Интерактивный ИИ-аватар — гид по истории Узбекистана. Отвечает только по проверенной базе знаний.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0e1830",
+  "theme_color": "#0e1830",
+  "icons": [
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
